@@ -121,9 +121,89 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .payment-container {
             background-color: white;
             border-radius: var(--border-radius-lg);
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: var(--spacing-lg);
             margin-bottom: var(--spacing-lg);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .payment-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.3s ease;
+        }
+        
+        .payment-step:hover {
+            transform: translateY(-2px);
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--gray-300);
+            color: var(--gray-700);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .payment-method {
+            flex: 1;
+            min-width: 150px;
+            border: 2px solid var(--gray-300);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-md);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .payment-method:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .payment-method.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(var(--primary-rgb), 0.05);
+            transform: scale(1.02);
+        }
+        
+        .payment-method-icon {
+            font-size: 2rem;
+            margin-bottom: var(--spacing-sm);
+            color: var(--gray-600);
+            transition: color 0.3s ease;
+        }
+        
+        .payment-method:hover .payment-method-icon,
+        .payment-method.selected .payment-method-icon {
+            color: var(--primary-color);
+        }
+        
+        .payment-success {
+            animation: successFadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes successFadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
         
         .payment-header {
@@ -472,7 +552,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     
                     <form method="POST" action="" id="paymentForm">
-                        <input type="hidden" name="selected_payment_method" id="selected_payment_method" value="">
+                        <input type="hidden" name="payment_method" id="payment_method" value="">
                         
                         <div class="form-group">
                             <label class="form-label">Select Payment Method</label>
@@ -556,7 +636,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         document.addEventListener('DOMContentLoaded', function() {
             const paymentMethods = document.querySelectorAll('.payment-method');
             const payButton = document.getElementById('payButton');
-            const selectedPaymentMethod = document.getElementById('selected_payment_method');
+            const selectedPaymentMethod = document.getElementById('payment_method');
             const upiDetails = document.getElementById('upi_details');
             const cardDetails = document.getElementById('card_details');
             const netbankingDetails = document.getElementById('netbanking_details');

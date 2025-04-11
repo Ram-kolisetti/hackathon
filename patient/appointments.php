@@ -160,7 +160,7 @@ foreach ($appointments as $appointment) {
                             <div class="dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="../assets/images/user-avatar.png" class="avatar" alt="User Avatar">
-                                    <span class="ms-2"><?php echo $_SESSION['name']; ?></span>
+                                    <span class="ms-2"><?php echo $_SESSION['first_name']; ?></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li><a class="dropdown-item" href="profile.php"><i class="fas fa-user me-2"></i> My Profile</a></li>

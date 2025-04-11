@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     appointment_date, appointment_time, symptoms, status, payment_status) 
                     VALUES (?, ?, ?, ?, ?, ?, ?, 'scheduled', 'pending')";
             
-            $appointment_id = insertData($sql, "iiisss", [
+            $appointment_id = insertData($sql, "iiissss", [
                 $patient_id, $doctor_id, $hospital_id, $department_id, 
                 $appointment_date, $appointment_time, $symptoms
             ]);
@@ -583,7 +583,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             
                             <div class="form-group">
                                 <label for="appointment_time" class="form-label">Appointment Time</label>
-                                <select id="appointment_time" name="appointment_time" class="form-select" required disabled>
+                                <input type="hidden" id="appointment_time" name="appointment_time" required>
+                                <select id="appointment_time_select" class="form-select" disabled>
                                     <option value="" disabled selected>Select Time</option>
                                     <!-- Time slots will be loaded dynamically based on doctor availability -->
                                 </select>
