@@ -18,7 +18,18 @@
         <div class="chatbot-body" id="chatbotBody">
             <div class="chat-message bot">
                 <div class="chat-bubble">
-                    Hello! I'm your healthcare assistant. How can I help you today?
+                    Hello! I'm your AI healthcare assistant. I can help you with:
+                    - Checking symptoms
+                    - Booking appointments
+                    - Finding specialists
+                    - Medical information
+                    - Emergency guidance
+                </div>
+                <div class="chat-suggestions">
+                    <button class="suggestion-btn" data-message="Check my symptoms">Check Symptoms</button>
+                    <button class="suggestion-btn" data-message="Book an appointment">Book Appointment</button>
+                    <button class="suggestion-btn" data-message="Find a specialist">Find Specialist</button>
+                    <button class="suggestion-btn" data-message="Emergency services">Emergency</button>
                 </div>
                 <div class="chat-time"><?php echo date('H:i'); ?></div>
             </div>

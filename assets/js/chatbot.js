@@ -137,10 +137,38 @@ class Chatbot {
         const timeString = now.getHours().toString().padStart(2, '0') + ':' + 
                           now.getMinutes().toString().padStart(2, '0');
         
-        messageElement.innerHTML = `
-            <div class="chat-bubble">${this.escapeHtml(message)}</div>
-            <div class="chat-time">${timeString}</div>
-        `;
+        // Split message into main content and suggestions
+        const parts = message.split('\n\n');
+        const mainContent = parts[0];
+        const suggestions = parts.length > 1 ? parts.slice(1) : [];
+        
+        let messageHtml = `<div class="chat-bubble">${this.escapeHtml(mainContent)}</div>`;
+        
+        // Add suggestions if present
+        if (suggestions.length > 0) {
+            messageHtml += '<div class="chat-suggestions">';
+            suggestions.forEach(suggestion => {
+                if (suggestion.startsWith('Quick actions:')) {
+                    const actions = suggestion.replace('Quick actions:', '').trim().split('\n- ');
+                    actions.forEach(action => {
+                        if (action.trim()) {
+                            messageHtml += `<button class="suggestion-btn" data-message="${this.escapeHtml(action.trim())}">${this.escapeHtml(action.trim())}</button>`;
+                        }
+                    });
+                } else if (suggestion.startsWith('Recommended departments:')) {
+                    const depts = suggestion.replace('Recommended departments:', '').trim().split(',');
+                    depts.forEach(dept => {
+                        if (dept.trim()) {
+                            messageHtml += `<button class="suggestion-btn department-btn" data-message="Book appointment with ${this.escapeHtml(dept.trim())}">${this.escapeHtml(dept.trim())}</button>`;
+                        }
+                    });
+                }
+            });
+            messageHtml += '</div>';
+        }
+        
+        messageHtml += `<div class="chat-time">${timeString}</div>`;
+        messageElement.innerHTML = messageHtml;
         
         this.body.appendChild(messageElement);
         this.scrollToBottom();
